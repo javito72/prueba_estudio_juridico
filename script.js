@@ -50,29 +50,32 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Contact Form Handling
     const contactForm = document.getElementById('contactForm');
-    const successMessage = document.getElementById('successMessage');
+const successMessage = document.getElementById('successMessage');
+
+contactForm.addEventListener('submit', function(e) {
+    e.preventDefault();
     
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Get form data
-        const formData = new FormData(contactForm);
-        const email = formData.get('email');
-        const name = formData.get('name');
-        const phone = formData.get('phone');
-        const message = formData.get('message');
-        
-        // Basic email validation
-        if (!isValidEmail(email)) {
-            showAlert('Por favor, ingrese un email válido.', 'error');
-            return;
-        }
-        
-        // Simulate form submission (in real implementation, this would send to server)
-        showLoadingState();
-        
-        // Simulate API call delay
-        setTimeout(function() {
+    // Get form data
+    const formData = new FormData(contactForm);
+    const email = formData.get('email');
+    
+    // Basic email validation
+    if (!isValidEmail(email)) {
+        showAlert('Por favor, ingrese un email válido.', 'error');
+        return;
+    }
+    
+    // Show loading state
+    showLoadingState();
+    
+    // Submit to Netlify
+    fetch('/', {
+        method: 'POST',
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData).toString()
+    })
+    .then(response => {
+        if (response.ok) {
             hideLoadingState();
             showSuccessMessage();
             contactForm.reset();
@@ -82,17 +85,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 hideSuccessMessage();
             }, 5000);
             
-            // Log form data (in real implementation, this would be sent to server)
-            console.log('Form submitted:', {
-                email: email,
-                name: name,
-                phone: phone,
-                message: message,
-                timestamp: new Date().toISOString()
-            });
-            
-        }, 1500);
+            console.log('Formulario enviado exitosamente a Netlify');
+        } else {
+            throw new Error('Error en el envío');
+        }
+    })
+    .catch(error => {
+        hideLoadingState();
+        showAlert('Hubo un error al enviar el formulario. Por favor, intente nuevamente.', 'error');
+        console.error('Error:', error);
     });
+});
     
     // Email validation function
     function isValidEmail(email) {

@@ -145,31 +145,37 @@
                     </div>
                 </div>
                 <div class="contact-form">
-                    <h3>Solicitar Consulta</h3>
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <label for="email">Email *</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Nombre Completo</label>
-                            <input type="text" id="name" name="name">
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Teléfono</label>
-                            <input type="tel" id="phone" name="phone">
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Consulta</label>
-                            <textarea id="message" name="message" rows="4" placeholder="Describa brevemente su consulta legal..."></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Enviar Consulta</button>
-                    </form>
-                    <div id="successMessage" class="success-message" style="display: none;">
-                        <i class="fas fa-check-circle"></i>
-                        <p>¡Mail enviado correctamente! Nos pondremos en contacto a la brevedad.</p>
-                    </div>
-                </div>
+    <h3>Solicitar Consulta</h3>
+    <!-- CAMBIOS AQUÍ: Agregar name="contact" method="POST" data-netlify="true" -->
+    <form id="contactForm" name="contact" method="POST" data-netlify="true">
+        
+        <!-- CAMBIO: Agregar campo oculto para evitar spam -->
+        <input type="hidden" name="form-name" value="contact" />
+        
+        <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="name">Nombre Completo</label>
+            <input type="text" id="name" name="name">
+        </div>
+        <div class="form-group">
+            <label for="phone">Teléfono</label>
+            <input type="tel" id="phone" name="phone">
+        </div>
+        <div class="form-group">
+            <label for="message">Consulta</label>
+            <textarea id="message" name="message" rows="4" placeholder="Describa brevemente su consulta legal..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar Consulta</button>
+    </form>
+    
+    <div id="successMessage" class="success-message" style="display: none;">
+        <i class="fas fa-check-circle"></i>
+        <p>¡Mail enviado correctamente! Nos pondremos en contacto a la brevedad.</p>
+    </div>
+</div>
             </div>
         </div>
     </section>
